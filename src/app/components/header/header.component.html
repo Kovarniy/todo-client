@@ -1,9 +1,12 @@
 <header tuiNavigationHeader tuiTheme="light">
-  <!-- TODO login/out -->
-  <a type="button" tuiButton [routerLink]="url.signup">
-    Зарегистрироваться
-  </a>
-  <a type="button" tuiButton [routerLink]="url.login">
-    Войти
-  </a>
+  @if (auth.user$ | async) {
+    <button type="button" tuiButton (click)="logout()">Выйти</button>
+  } @else {
+    <a type="button" tuiButton [routerLink]="url.signup">
+      Зарегистрироваться
+    </a>
+    <a type="button" tuiButton [routerLink]="url.login">
+      Войти
+    </a>
+  }
 </header>

@@ -1,24 +1,26 @@
-<h1>{{title$ | async}}</h1>
+<h1>{{(isLoginPage$ | async) ? 'Вход' : 'Регистрация'}}</h1>
 <tui-textfield>
   <input
-    placeholder="I am placeholder"
+    placeholder="Имя"
     tuiTextfield
     type="text"
-    [(ngModel)]="userData.username"
+    [(ngModel)]="user.name"
   />
 </tui-textfield>
 <tui-textfield>
   <input
-    placeholder="I am placeholder"
+    placeholder="Пароль"
     tuiTextfield
     type="password"
-    [(ngModel)]="userData.password"
+    [(ngModel)]="user.password"
   />
   <tui-icon tuiPassword />
 </tui-textfield>
 
-@if (isLoginPage$ | async) {
-  <button type="button" tuiButton (click)="login()">Войти</button>
-} @else {
-  <button type="button" tuiButton (click)="signup()">Зарегистрироваться</button>
-}
+<div class="footer">
+  @if (isLoginPage$ | async) {
+    <button [disabled]="!isFormCompleted" type="button" tuiButton (click)="login()">Войти</button>
+  } @else {
+    <button [disabled]="!isFormCompleted" type="button" tuiButton (click)="signup()">Зарегистрироваться</button>
+  }
+</div>

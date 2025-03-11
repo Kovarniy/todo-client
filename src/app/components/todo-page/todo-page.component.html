@@ -1,1 +1,8 @@
-
+  @for (todo of todos$ | async; track todo.id; let id = $index) {
+    <div class="card">
+      № {{id + 1}} {{todo.title}}
+      <input tuiCheckbox type="checkbox" [ngModel]="todo.completed" size="s"/>
+    </div>
+  } @empty {
+    У вас нет задачь ;(
+  }

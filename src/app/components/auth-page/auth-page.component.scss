@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  width: 570px;
+}
+
+tui-textfield + tui-textfield, .footer  {
+  margin-top: var(--S16);
+}
+
+.footer {
+  display: flex;
+}
