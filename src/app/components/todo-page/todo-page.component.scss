@@ -5,20 +5,20 @@
   align-items: center;
   padding: var(--S20);
 
-  .card {
-    border: 1px solid rgb(247 233 233);
-    border-radius: var(--S16);
-    width: 50%;
-    height: 56px;
-    padding: 0 var(--S16);
+  .header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 var(--S10) var(--S20) 0;
-    box-sizing: border-box;
+    justify-content: right;
+    width: 80%;
+    margin-bottom: var(--S20);
   }
 
-  .card + .card {
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  app-todo-card + app-todo-card {
     margin-top: var(--S16);
   }
 }

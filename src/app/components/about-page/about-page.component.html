@@ -1,0 +1,15 @@
+<h1>Навигация</h1>
+<ul>
+  @if (auth.user$ | async; as user) {
+    <li>
+      <a [routerLink]="'/todo/' + user.id">Курсы</a>
+    </li>
+  } @else {
+    <li>
+      <a routerLink="/signup">Регистрация</a>
+    </li>
+    <li>
+      <a routerLink="/login" href="#">Авторизация</a>
+    </li>
+  }
+</ul>

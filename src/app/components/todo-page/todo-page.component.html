@@ -1,8 +1,37 @@
+<div class="header">
+  <button tuiButton type="button" size="m" (click)="openModal()">
+    Добавить задачу
+  </button>
+</div>
+<div class="content">
   @for (todo of todos$ | async; track todo.id; let id = $index) {
-    <div class="card">
-      № {{id + 1}} {{todo.title}}
-      <input tuiCheckbox type="checkbox" [ngModel]="todo.completed" size="s"/>
-    </div>
+    <app-todo-card
+      [todo]="todo"
+      [number]="id + 1"
+      (edit)="openModal(todo)"
+      (remove)="onRemove(todo)"
+      (changeStatus)="onStatusChange($event, todo)"
+    ></app-todo-card>
   } @empty {
-    У вас нет задачь ;(
+    У вас нет задачь ;(-
   }
+</div>
+
+<ng-template
+  [tuiDialogOptions]="{label: 'Опишите задачу', size: 's'}"
+  [(tuiDialog)]="isOpenModal"
+>
+  <div class="modal__body">
+    <tui-textfield>
+      <input
+        placeholder="Задача"
+        tuiTextfield
+        type="text"
+        [(ngModel)]="editTodo.title"
+      />
+    </tui-textfield>
+  </div>
+  <button tuiButton type="submit" (click)="onEdit()">
+    {{ action === 'add' ? 'Добавить' : 'Обновить' }}
+  </button>
+</ng-template>

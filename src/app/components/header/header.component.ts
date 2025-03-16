@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiButton} from '@taiga-ui/core';
 import {TuiHeaderComponent} from '@taiga-ui/layout';
@@ -12,6 +12,7 @@ import {AsyncPipe} from '@angular/common';
   imports: [TuiHeaderComponent, TuiButton, RouterLink, AsyncPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   private readonly theme = inject(TuiThemeColorService);

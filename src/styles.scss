@@ -8,3 +8,21 @@
   --S20: 20px;
   --S24: 24px;
 }
+
+.context-menu {
+  display: flex;
+  flex-direction: column;
+  button {
+    padding: var(--S4) var(--S8);
+    cursor: pointer;
+    border: none;
+    background: none;
+    &:hover {
+      background-color: rgba(239, 236, 236, 0.82);
+    }
+  }
+}
+
+.modal__body {
+  margin: var(--S16) 0;
+}

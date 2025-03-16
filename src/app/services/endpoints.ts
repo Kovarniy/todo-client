@@ -11,6 +11,8 @@ export class Endpoints {
     signup: _`auth/signup`,
   };
   static todo = {
-    todos: _`todo/:userId`,
+    todos: _`todo/:userId`, // GET, POST
+    todo: _`todo`, // PUT
+    deleteTodo: _`todo/:id`, // DELETE
   };
 }

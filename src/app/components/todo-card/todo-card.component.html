@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card__header">
+    <span>{{todo.createdAt | date :'MM.dd.yy, HH:mm '}}</span>
+    <button
+      #dropdown="tuiDropdown"
+      [tuiDropdownManual]="isOpen"
+      (click)="openContextMenu()"
+      (tuiActiveZoneChange)="onActiveZone($event)"
+      (tuiObscured)="onObscured($event)"
+      [tuiDropdown]="content"
+      tuiIconButton
+      appearance="icon"
+      size="s"
+    >
+      <tui-icon icon="@tui.settings" [style.font-size.rem]="1"/>
+
+      <ng-template #content>
+        <tui-data-list
+          role="menu"
+          tuiDataListDropdownManager
+          class="context-menu"
+        >
+          <button tuiOption (click)="onEdit()">Редактировать</button>
+          <button tuiOption (click)="onRemove()">Удалить</button>
+        </tui-data-list>
+      </ng-template>
+    </button>
+  </div>
+  <div class="card__body">
+    <p><b>{{ number }}. {{ todo.title }}</b></p>
+    <input tuiCheckbox type="checkbox" [ngModel]="todo.completed" size="s" (click)="onStatusChange(!todo.completed)"/>
+  </div>
+</div>

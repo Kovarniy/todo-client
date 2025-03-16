@@ -1,10 +1,10 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
 import {TuiPassword} from '@taiga-ui/kit';
-import {map, shareReplay} from 'rxjs';
+import {map, shareReplay, take} from 'rxjs';
 import {AuthService} from '@app/services';
 import {User} from '@app/models';
 
@@ -21,6 +21,7 @@ import {User} from '@app/models';
   ],
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthPageComponent {
   private route = inject(ActivatedRoute);
@@ -30,13 +31,11 @@ export class AuthPageComponent {
     map((url) => url[0].path === `login`),
     shareReplay(),
   );
-  title$ = this.isLoginPage$.pipe(
-    map((isLoginPage) => (isLoginPage ? 'Вход' : 'Регистрация')),
-  );
   user: User = {
     password: '',
     name: '',
   };
+
   get isFormCompleted() {
     return this.user.name && this.user.password;
   }
@@ -44,11 +43,17 @@ export class AuthPageComponent {
   constructor(private auth: AuthService) {}
 
   login() {
-    this.auth.login(this.user).subscribe((user) => this.openTodo(user));
+    this.auth
+      .login(this.user)
+      .pipe(take(1))
+      .subscribe((user) => this.openTodo(user));
   }
 
   signup() {
-    this.auth.signup(this.user).subscribe((user) => this.openTodo(user));
+    this.auth
+      .signup(this.user)
+      .pipe(take(1))
+      .subscribe((user) => this.openTodo(user));
   }
 
   private openTodo(user: User | null) {
