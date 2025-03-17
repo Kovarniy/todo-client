@@ -1,5 +1,6 @@
 <header tuiNavigationHeader tuiTheme="light">
   @if (auth.user$ | async) {
+    <button type="button" tuiButton *hasRole="['admin']">Админка</button>
     <button type="button" tuiButton (click)="logout()">Выйти</button>
   } @else {
     <a type="button" tuiButton [routerLink]="url.signup">

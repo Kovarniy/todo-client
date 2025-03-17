@@ -5,11 +5,18 @@ import {TuiHeaderComponent} from '@taiga-ui/layout';
 import {TuiThemeColorService} from '@taiga-ui/cdk';
 import {AuthService} from '@app/services';
 import {AsyncPipe} from '@angular/common';
+import {HasRoleDirective} from '@app/directives/has-role.directive';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TuiHeaderComponent, TuiButton, RouterLink, AsyncPipe],
+  imports: [
+    TuiHeaderComponent,
+    TuiButton,
+    RouterLink,
+    AsyncPipe,
+    HasRoleDirective,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
