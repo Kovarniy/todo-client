@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnDestroy} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService, TodoService} from '@app/services';
 import {AsyncPipe} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
-import {BehaviorSubject, switchMap, take} from 'rxjs';
+import {BehaviorSubject, Subscription, switchMap, take} from 'rxjs';
 import {
   TuiButton,
   TuiDialog,
@@ -30,9 +30,10 @@ import {Todo} from '@app/models';
   styleUrl: './todo-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoPageComponent {
+export class TodoPageComponent implements OnDestroy {
   private todoService = inject(TodoService);
   private route = inject(ActivatedRoute);
+  private subscription: Subscription;
   protected isOpenModal = false;
   public editTodo: Todo = {
     title: '',
@@ -42,12 +43,11 @@ export class TodoPageComponent {
   todos$ = new BehaviorSubject<Todo[]>([]);
 
   constructor(private auth: AuthService) {
-    this.route.url
+    this.subscription = this.route.url
       .pipe(
         switchMap((url) => {
           return this.todoService.getTodos(url[1].path);
         }),
-        take(1),
       )
       .subscribe((todos) => this.todos$.next(todos));
   }
@@ -91,5 +91,9 @@ export class TodoPageComponent {
       .update(todo)
       .pipe(take(1))
       .subscribe((todos) => this.todos$.next(todos));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

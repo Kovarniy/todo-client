@@ -5,12 +5,12 @@ import {haveAccessGuard, isAuthGuard, isNotAuthGuard} from '@app/guards';
 export const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: AboutPageComponent,
   },
   {
     path: 'todo/:id',
-    canActivate: [isAuthGuard, haveAccessGuard], // TODO добавить гвард для проверки userId/роли
-    // (В презе можно сказать про два уровня защиты, что мы защищаем UI при момощи гварда + добавляем токен при помощи интерцептора)
+    canActivate: [isAuthGuard, haveAccessGuard],
     loadComponent: () =>
       import('./components/todo-page').then((comp) => comp.TodoPageComponent),
   },
